@@ -1,0 +1,63 @@
+.button {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Sans-serif";
+    -fx-background-radius: 3,2,2,2;
+    -fx-padding: 12 30 12 30;
+    -fx-border-color: #FFBF00;
+    -fx-border-width: 1px;
+}
+
+.button:hover {
+    -fx-background-color:
+        #FFBF00,
+        linear-gradient(#FFC400, #F5BC00),
+        linear-gradient(#EBB400, #E6B100),
+        linear-gradient(#E1B524, #E6BF3C);
+    -fx-text-fill: white;
+}
+
+.check-box {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Sans-serif";
+    -fx-text-fill: #FFBF00;
+}
+
+.check-box:hover {
+    -fx-text-fill: white;
+}
+
+.check-box:selected {
+    -fx-text-fill: black;
+    -fx-background-color:
+        #FFBF00,
+        linear-gradient(#FFC400, #F5BC00),
+        linear-gradient(#EBB400, #E6B100),
+        linear-gradient(#E1B524, #E6BF3C);
+}
+
+.text-field {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Sans-serif";
+    -fx-border-width: 1px;
+    -fx-border-radius: 3;
+    -fx-padding: 8;
+}
+
+.text-field:hover {
+    -fx-border-color: #E6B100;
+}
+
+.text-field:focused {
+    -fx-border-color: #E1B524;
+}
+
+.text {
+    -fx-text-fill: #FFBF00;
+}
