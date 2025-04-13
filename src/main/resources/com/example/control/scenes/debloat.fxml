@@ -1,24 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="624.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.control.controllers.DebloatController">
+<AnchorPane prefHeight="715.0" prefWidth="1087.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.control.controllers.DebloatController">
     <children>
-        <ImageView fx:id="backgroundImage" fitHeight="624.0" fitWidth="477.0">
+        <ImageView fx:id="backgroundImage" fitHeight="715.0" fitWidth="1087.0">
             <image>
                 <Image url="@../images/background_main.jpg" />
-            </image></ImageView>
-      <Button fx:id="button_scan" layoutX="153.0" layoutY="572.0" mnemonicParsing="false" onAction="#scanForBloaterApps" prefHeight="25.0" prefWidth="169.0" text="Scan" />
-      <Button fx:id="button_start_debloat" layoutX="320.0" layoutY="490.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="153.0" text="Remove apps" />
-      <Button fx:id="button_back_to_main" mnemonicParsing="false" onAction="#goToMain" text="back" />
-      <ListView fx:id="lv_found_apps" layoutX="2.0" layoutY="50.0" opacity="0.9" prefHeight="110.0" prefWidth="471.0" />
-      <ListView fx:id="lv_apps_to_remove" layoutX="3.0" layoutY="167.0" opacity="0.9" prefHeight="110.0" prefWidth="471.0" />
-      <Button fx:id="button_kill_background_services" layoutX="14.0" layoutY="490.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" text="Kill services" />
-
+            </image>
+            <effect>
+                <BoxBlur height="10.0" width="10.0" />
+            </effect>
+        </ImageView>
+        <Button fx:id="button_scan" layoutX="153.0" layoutY="572.0" mnemonicParsing="false" onAction="#scanForBloaterApps" prefHeight="25.0" prefWidth="169.0" styleClass="btn-main" text="Scan" />
+        <Button fx:id="button_start_debloat" layoutX="320.0" layoutY="490.0" mnemonicParsing="false" onAction="#removeSelectedApps" prefHeight="25.0" prefWidth="153.0" styleClass="btn-main" text="Remove apps" />
+        <Button fx:id="button_back_to_main" mnemonicParsing="false" onAction="#goToMain" styleClass="btn-back" text="back" />
+        <ListView fx:id="lv_apps_to_remove" layoutX="274.0" layoutY="100.0" opacity="0.9" prefHeight="300.0" prefWidth="232.0" />
+        <ListView fx:id="lv_found_apps" layoutX="14.0" layoutY="100.0" opacity="0.9" prefHeight="300.0" prefWidth="232.0" />
+        <Button fx:id="button_kill_background_services" layoutX="14.0" layoutY="490.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" styleClass="btn-main" text="Kill services" />
+        <TextArea fx:id="logArea" editable="false" layoutX="544.0" layoutY="100.0" opacity="0.9" prefHeight="518.0" prefWidth="471.0">
+            <font>
+                <Font name="SansSerif Regular" size="14.0" />
+            </font>
+            <cursor>
+                <Cursor fx:constant="DEFAULT" />
+            </cursor>
+        </TextArea>
+        <Button fx:id="button_log" layoutX="650.0" layoutY="645.0" mnemonicParsing="false" onAction="#showLog" prefHeight="23.0" prefWidth="259.0" styleClass="btn-secondary" text="Hide log">
+            <font>
+                <Font name="SansSerif Bold" size="12.0" />
+            </font>
+        </Button>
 
     </children>
 </AnchorPane>

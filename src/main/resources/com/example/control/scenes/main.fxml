@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="rootPane" prefHeight="624.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.control.controllers.Controller">
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<AnchorPane fx:id="rootPane" prefHeight="715.0" prefWidth="1087.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.control.controllers.Controller">
    <children>
-      <ImageView fx:id="backgroundImage" fitHeight="624.0" fitWidth="477.0">
+      <ImageView fx:id="backgroundImage" fitHeight="715.0" fitWidth="1087.0">
          <image>
             <Image url="@../images/background_main.jpg" />
-         </image></ImageView>
-
-      <Button fx:id="button_in" layoutX="167.0" layoutY="560.0" mnemonicParsing="false" onAction="#install" prefHeight="31.0" prefWidth="144.0" text="Install">
+         </image>
+         <effect>
+            <BoxBlur height="10.0" width="10.0" />
+         </effect></ImageView>
+      <Label fx:id="welcomeLabel" layoutX="10.0" layoutY="10.0" onMouseClicked="#configureGoTo" style="-fx-cursor: hand;" textFill="#ffbf00">
+         <font>
+            <Font name="SansSerif Bold" size="16.0" />
+         </font>
+      </Label>
+      <Button fx:id="button_in" layoutX="167.0" layoutY="645.0" mnemonicParsing="false" onAction="#fetch" prefHeight="31.0" prefWidth="144.0" styleClass="btn-main" text="Install">
          <font>
             <Font name="SansSerif Bold" size="12.0" />
          </font></Button>
-      <Button fx:id="button_de" layoutX="319.0" layoutY="560.0" mnemonicParsing="false" onAction="#goToDebloat" prefHeight="31.0" prefWidth="144.0" text="Debloat">
+      <Button fx:id="button_de" layoutX="324.0" layoutY="645.0" mnemonicParsing="false" onAction="#goToDebloat" prefHeight="31.0" prefWidth="144.0" styleClass="btn-main" text="Debloat">
          <font>
             <Font name="SansSerif Bold" size="12.0" />
          </font></Button>
@@ -31,7 +44,7 @@
          </font>
       </CheckBox>
 
-      <Text fill="#ffbf00" layoutX="4.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Applications that you can install or remove" textAlignment="CENTER" wrappingWidth="443.13671875">
+      <Text fill="#ffbf00" layoutX="322.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Applications that you can install or remove" textAlignment="CENTER" wrappingWidth="443.13671875">
          <font>
             <Font name="SansSerif Regular" size="22.0" />
          </font>
@@ -41,7 +54,7 @@
             <Font name="SansSerif Bold" size="14.0" />
          </font>
       </CheckBox>
-      <Button fx:id="button_un" layoutX="8.0" layoutY="560.0" mnemonicParsing="false" onAction="#uninstall" prefHeight="31.0" prefWidth="144.0" text="Uninstall">
+      <Button fx:id="button_un" layoutX="8.0" layoutY="645.0" mnemonicParsing="false" onAction="#uninstall" prefHeight="31.0" prefWidth="144.0" styleClass="btn-main" text="Uninstall">
          <font>
             <Font name="SansSerif Bold" size="12.0" />
          </font>
@@ -61,12 +74,7 @@
             <Font name="SansSerif Bold" size="18.0" />
          </font>
       </Text>
-      <CheckBox fx:id="checkboxBattleNet" layoutX="27.0" layoutY="132.0" mnemonicParsing="false" text="Battle.net" textFill="#ff9d00">
-         <font>
-            <Font name="SansSerif Bold" size="14.0" />
-         </font>
-      </CheckBox>
-      <CheckBox fx:id="checkboxSteam" layoutX="27.0" layoutY="168.0" mnemonicParsing="false" text="Steam" textFill="#ff9d00">
+      <CheckBox fx:id="checkboxSteam" layoutX="27.0" layoutY="132.0" mnemonicParsing="false" text="Steam" textFill="#ff9d00">
          <font>
             <Font name="SansSerif Bold" size="14.0" />
          </font>
@@ -81,7 +89,7 @@
             <Font name="SansSerif Bold" size="14.0" />
          </font>
       </CheckBox>
-      <CheckBox fx:id="checkboxEpicGames" layoutX="27.0" layoutY="203.0" mnemonicParsing="false" text="Epic Games" textFill="#ff9d00">
+      <CheckBox fx:id="checkboxEpicGames" layoutX="27.0" layoutY="168.0" mnemonicParsing="false" text="Epic Games" textFill="#ff9d00">
          <font>
             <Font name="SansSerif Bold" size="14.0" />
          </font>
@@ -96,22 +104,20 @@
             <Font name="SansSerif Bold" size="14.0" />
          </font>
       </CheckBox>
-      <CheckBox fx:id="checkboxEclipse" layoutX="176.0" layoutY="267.0" mnemonicParsing="false" text="Eclipse" textFill="#ff9d00">
+      <CheckBox fx:id="checkboxPostman" layoutX="175.0" layoutY="270.0" mnemonicParsing="false" text="Postman" textFill="#ff9d00">
          <font>
             <Font name="SansSerif Bold" size="14.0" />
          </font>
       </CheckBox>
-      <CheckBox fx:id="checkboxPostman" layoutX="176.0" layoutY="303.0" mnemonicParsing="false" text="Postman" textFill="#ff9d00">
-         <font>
-            <Font name="SansSerif Bold" size="14.0" />
-         </font>
-      </CheckBox>
-      <TextArea fx:id="logArea" editable="false" layoutX="3.0" layoutY="329.0" prefHeight="156.0" prefWidth="471.0" visible="false">
+      <TextArea fx:id="logArea" editable="false" layoutX="544.0" layoutY="100.0" opacity="0.9" prefHeight="518.0" prefWidth="471.0">
          <font>
             <Font name="SansSerif Regular" size="14.0" />
          </font>
+         <cursor>
+            <Cursor fx:constant="DEFAULT" />
+         </cursor>
       </TextArea>
-      <Button fx:id="button_log" layoutX="109.0" layoutY="492.0" mnemonicParsing="false" onAction="#showLog" prefHeight="23.0" prefWidth="259.0" text="Show log">
+      <Button fx:id="button_log" layoutX="650.0" layoutY="645.0" mnemonicParsing="false" onAction="#showLog" prefHeight="23.0" prefWidth="259.0" styleClass="btn-secondary" text="Hide log">
          <font>
             <Font name="SansSerif Bold" size="12.0" />
          </font>
@@ -126,5 +132,12 @@
             <Font name="SansSerif Bold" size="14.0" />
          </font>
       </CheckBox>
+      <StackPane fx:id="loadingOverlay" pickOnBounds="true" style="-fx-background-color: rgba(0, 0, 0, 0.6);" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"> <!-- important: blocks mouse events -->
+
+         <VBox alignment="CENTER" spacing="15">
+            <ProgressIndicator fx:id="progressIndicator" maxHeight="100" maxWidth="100" />
+            <Label style="-fx-font-size: 16px;" text="Please wait..." textFill="white" />
+         </VBox>
+      </StackPane>
    </children>
 </AnchorPane>

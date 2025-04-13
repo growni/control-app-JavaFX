@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="624.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.control.controllers.LoginController">
@@ -12,36 +19,51 @@
         <ImageView fx:id="backgroundImage" fitHeight="624.0" fitWidth="477.0">
             <image>
                 <Image url="@../images/background_main.jpg" />
-            </image></ImageView>
+            </image>
+            <effect>
+                <BoxBlur height="10.0" width="10.0" />
+            </effect>
+        </ImageView>
 
-        <Button fx:id="button_login" layoutX="98.0" layoutY="354.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="281.0" text="Login" textFill="#ffbf00">
+        <Button fx:id="login_button_login" layoutX="98.0" layoutY="354.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="31.0" prefWidth="281.0" styleClass="btn-main" text="Login" textFill="#ffbf00">
             <font>
                 <Font name="SansSerif Bold" size="12.0" />
             </font></Button>
-        <Button fx:id="button_register" layoutX="98.0" layoutY="410.0" mnemonicParsing="false" onAction="#goToRegister" prefHeight="31.0" prefWidth="281.0" text="Create account" textFill="#ffbf00">
+        <Button fx:id="login_button_register" layoutX="98.0" layoutY="410.0" mnemonicParsing="false" onAction="#goToRegister" prefHeight="31.0" prefWidth="281.0" styleClass="btn-main" text="Create account" textFill="#ffbf00">
             <font>
                 <Font name="SansSerif Bold" size="12.0" />
             </font></Button>
-      <Button fx:id="button_reset_password" layoutX="98.0" layoutY="465.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="281.0" text="Reset password" textFill="#ffbf00">
+      <Button fx:id="login_button_reset_password" layoutX="98.0" layoutY="465.0" mnemonicParsing="false" onAction="#goToResetPassword" prefHeight="31.0" prefWidth="281.0" styleClass="btn-main" text="Reset password" textFill="#ffbf00">
          <font>
             <Font name="SansSerif Bold" size="12.0" />
          </font>
       </Button>
-      <TextField fx:id="username" layoutX="98.0" layoutY="174.0" prefHeight="39.0" prefWidth="281.0" promptText="username">
+      <TextField fx:id="login_username_field" layoutX="98.0" layoutY="174.0" prefHeight="39.0" prefWidth="281.0" promptText="username">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="password" layoutX="98.0" layoutY="238.0" prefHeight="39.0" prefWidth="281.0" promptText="password">
+      <PasswordField fx:id="login_password_field" layoutX="98.0" layoutY="238.0" prefHeight="39.0" prefWidth="281.0" promptText="password">
          <font>
             <Font name="SansSerif Regular" size="18.0" />
          </font>
-      </TextField>
-      <Button fx:id="button_free_enter" layoutX="98.0" layoutY="567.0" mnemonicParsing="false" onAction="#goToMain" prefHeight="31.0" prefWidth="281.0" text="Use as guest" textFill="#ffbf00">
+      </PasswordField>
+      <Button fx:id="login_button_free_enter" layoutX="98.0" layoutY="567.0" mnemonicParsing="false" onAction="#handleGuestLogin" prefHeight="31.0" prefWidth="281.0" styleClass="btn-main" text="Use as guest" textFill="#ffbf00">
          <font>
             <Font name="SansSerif Bold" size="12.0" />
          </font>
       </Button>
-        
+        <Hyperlink fx:id="login_website_link" alignment="CENTER" contentDisplay="CENTER" layoutX="98.0" layoutY="40.0" onAction="#handleWebsiteLink" prefHeight="21.0" prefWidth="281.0" text="Visit the website" textFill="#ffbf00">
+            <font>
+                <Font name="SansSerif Bold" size="18.0" />
+            </font>
+        </Hyperlink>
+        <StackPane fx:id="loadingOverlay" pickOnBounds="true" style="-fx-background-color: rgba(0, 0, 0, 0.6);" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"> <!-- important: blocks mouse events -->
+
+            <VBox alignment="CENTER" spacing="15">
+                <ProgressIndicator fx:id="progressIndicator" maxHeight="100" maxWidth="100" />
+                <Label style="-fx-font-size: 16px;" text="Please wait..." textFill="white" />
+            </VBox>
+        </StackPane>
     </children>
 </AnchorPane>
