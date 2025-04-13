@@ -4,6 +4,7 @@ import com.example.control.DTO.RegisterRequest;
 import com.example.control.DTO.Session;
 import com.example.control.utils.windows.ENDPOINTS;
 import com.example.control.utils.windows.PATHS;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -28,18 +30,47 @@ public class RegisterController {
 
     private final SceneController sceneController = new SceneController();
     private static final String REGISTER_URL = ENDPOINTS.REGISTER.getValue();
+    private Utils utilController;
+
+    @FXML private TextField email;
+    @FXML private TextField username;
+    @FXML private TextField password;
+    @FXML private StackPane loadingOverlay;
 
     @FXML
-    private TextField email;
+    public void initialize() {
+        this.utilController = new Utils(loadingOverlay);
+    }
 
     @FXML
-    private TextField username;
+    public void handleRegister(ActionEvent event)  {
+        Task<Void> task = new Task<Void>() {
 
-    @FXML
-    private TextField password;
+            @Override
+            protected Void call() throws Exception {
+                utilController.showLoading();
+                register();
 
-    @FXML
-    public void handleRegister(ActionEvent e)  {
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(e -> {
+            utilController.hideLoading();
+
+            try {
+                goToLogin(event);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+
+        task.setOnFailed(e -> utilController.hideLoading());
+
+        new Thread(task).start();
+    }
+
+    public void register() {
         RegisterRequest request = new RegisterRequest(username.getText(), password.getText(), email.getText());
 
         RestTemplate restTemplate = new RestTemplate();
@@ -54,18 +85,20 @@ public class RegisterController {
             ResponseEntity<String> response = restTemplate.exchange(REGISTER_URL, HttpMethod.POST, entity, String.class);
 
             if (response.getStatusCode() == HttpStatus.OK) {
-                showAlert(Alert.AlertType.INFORMATION, "Success", response.getBody());
-                goToLogin(e);
+                utilController.runLaterAlert(Alert.AlertType.INFORMATION, "Success", response.getBody());
             } else {
-                showAlert(Alert.AlertType.ERROR, "Error", response.getBody());
+                utilController.runLaterAlert(Alert.AlertType.ERROR, "Error", response.getBody());
+                throw new RuntimeException();
             }
         } catch (HttpClientErrorException ex) {
             String errorMessage = ex.getResponseBodyAsString();
-            showAlert(Alert.AlertType.ERROR, "Error", errorMessage);
-        } catch (Exception ex) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Something went wrong: " + ex.getMessage());
-        }
+            utilController.runLaterAlert(Alert.AlertType.ERROR, "Error", errorMessage);
 
+            throw new RuntimeException();
+        } catch (Exception ex) {
+            utilController.runLaterAlert(Alert.AlertType.ERROR, "Error", "Something went wrong: " + ex.getMessage());
+            throw new RuntimeException();
+        }
     }
 
     @FXML
@@ -76,12 +109,5 @@ public class RegisterController {
     @FXML
     public void goToMain(ActionEvent e) throws IOException {
         sceneController.switchScene((Node) e.getSource(), PATHS.MAIN.getValue());
-    }
-
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

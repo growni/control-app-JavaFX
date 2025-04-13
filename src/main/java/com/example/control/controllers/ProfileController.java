@@ -3,6 +3,8 @@ package com.example.control.controllers;
 import com.example.control.DTO.FeedbackRequest;
 import com.example.control.DTO.Session;
 import com.example.control.utils.windows.ENDPOINTS;
+import com.example.control.utils.windows.PATHS;
+import com.example.control.utils.windows.URLs;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -58,11 +60,29 @@ public class ProfileController {
 
     @FXML
     public void goToMain(ActionEvent e) throws IOException {
-        sceneController.switchScene((Node) e.getSource(), "/com/example/control/scenes/main.fxml");
+        sceneController.switchScene((Node) e.getSource(), PATHS.MAIN.getValue());
     }
 
     @FXML
     private void handleSaveChanges(ActionEvent event) {
+        Task task = new Task() {
+
+            @Override
+            protected Object call() throws Exception {
+                utilController.showLoading();
+                saveChangesOnProfile();
+
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(e -> utilController.hideLoading());
+        task.setOnFailed(e -> utilController.hideLoading());
+
+        new Thread(task).start();
+    }
+
+    public void saveChangesOnProfile() {
         String newPassword = profile_new_password_field.getText();
 
         String username = Session.getUsername();
@@ -79,30 +99,51 @@ public class ProfileController {
 
         try {
             ResponseEntity<String> response = restTemplate.exchange(
-                    "http://localhost:8000/api/profile/update-password",
+                    ENDPOINTS.UPDATE_PASSWORD.getValue(),
                     HttpMethod.PUT,
                     request,
                     String.class
             );
 
             if (response.getStatusCode() == HttpStatus.OK) {
-                utilController.showAlert(Alert.AlertType.INFORMATION, "Success", "Password updated successfully!");
+                utilController.runLaterAlert(Alert.AlertType.INFORMATION, "Success", "Password updated successfully!");
                 profile_new_password_field.clear();
+
             } else {
-                utilController.showAlert(Alert.AlertType.ERROR, "Update Failed", response.getBody());
+                utilController.runLaterAlert(Alert.AlertType.ERROR, "Update Failed", response.getBody());
+                throw new RuntimeException();
             }
 
         } catch (HttpClientErrorException e) {
-            utilController.showAlert(Alert.AlertType.ERROR, "Error",  e.getResponseBodyAsString());
+            utilController.runLaterAlert(Alert.AlertType.ERROR, "Error",  e.getResponseBodyAsString());
+            throw new RuntimeException();
         }
     }
 
     @FXML
     public void handleSubscribe(ActionEvent event) {
+        Task task = new Task() {
+
+            @Override
+            protected Object call() throws Exception {
+                utilController.showLoading();
+                subscribe();
+
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(_ -> utilController.hideLoading());
+        task.setOnFailed(_ -> utilController.hideLoading());
+
+        new Thread(task).start();
+    }
+
+    public void subscribe() {
         String email = profile_email_field.getText();
 
         if (email == null || email.isBlank()) {
-            utilController.showAlert(Alert.AlertType.WARNING, "Missing Email", "Please provide an email.");
+            utilController.runLaterAlert(Alert.AlertType.WARNING, "Missing Email", "Please provide an email.");
             return;
         }
 
@@ -125,14 +166,17 @@ public class ProfileController {
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, entity, String.class);
 
             if (response.getStatusCode() == HttpStatus.OK) {
-                applySubscriptionStyle(email);
+                Platform.runLater(() -> applySubscriptionStyle(email));
             } else {
-                utilController.showAlert(Alert.AlertType.ERROR, "Failed", response.toString());
+                utilController.runLaterAlert(Alert.AlertType.ERROR, "Failed", response.toString());
+                throw new RuntimeException();
             }
         } catch (Exception e) {
-            utilController.showAlert(Alert.AlertType.ERROR, "Error", "Could not complete request: " + e.getMessage());
+            utilController.runLaterAlert(Alert.AlertType.ERROR, "Error", "Could not complete request: " + e.getMessage());
+            throw new RuntimeException();
         }
     }
+
     @FXML
     public void handleSendFeedback(ActionEvent e) {
 
@@ -149,14 +193,8 @@ public class ProfileController {
             }
         };
 
-        task.setOnSucceeded(event -> {
-            utilController.hideLoading();
-        });
-
-        task.setOnFailed(event -> {
-            utilController.hideLoading();
-            task.getException();
-        });
+        task.setOnSucceeded(_ -> utilController.hideLoading());
+        task.setOnFailed(_ -> utilController.hideLoading());
 
         new Thread(task).start();
     }

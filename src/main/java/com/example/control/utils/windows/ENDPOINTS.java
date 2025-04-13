@@ -7,7 +7,8 @@ public enum ENDPOINTS {
     IS_SUBSCRIBED("https://control-app-backend.onrender.com/api/profile/is-subscribed?email="),
     SUBSCRIBE("https://control-app-backend.onrender.com/api/profile/subscribe"),
     UNSUBSCRIBE("https://control-app-backend.onrender.com/api/profile/unsubscribe"),
-    REGISTER("https://control-app-backend.onrender.com/api/auth/register");
+    REGISTER("https://control-app-backend.onrender.com/api/auth/register"),
+    UPDATE_PASSWORD("https://control-app-backend.onrender.com/api/profile/update-password");
 
     private final String url;
 
