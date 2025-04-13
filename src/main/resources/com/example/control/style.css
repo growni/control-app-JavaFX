@@ -1,4 +1,4 @@
-.button {
+.btn-main {
     -fx-background-color: white;
     -fx-text-fill: black;
     -fx-font-size: 13px;
@@ -8,9 +8,11 @@
     -fx-padding: 12 30 12 30;
     -fx-border-color: #FFBF00;
     -fx-border-width: 1px;
+    -fx-alignment: center;
+    -fx-content-display: center;
 }
 
-.button:hover {
+.btn-main:hover {
     -fx-background-color:
         #FFBF00,
         linear-gradient(#FFC400, #F5BC00),
@@ -60,4 +62,92 @@
 
 .text {
     -fx-text-fill: #FFBF00;
+}
+#welcomeLabel {
+    -fx-text-fill: #ffdd66;
+}
+#welcomeLabel:hover {
+    -fx-underline: true;
+    -fx-text-fill: #ffdd66;
+}
+
+.readonly-field {
+    -fx-background-color: #f0f0f0;
+    -fx-opacity: 1.0;
+    -fx-text-fill: #666666;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-style: italic;
+    -fx-cursor: default;
+}
+.button-subscribed {
+    -fx-background-color: #ff3232;
+    -fx-text-fill: black;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Sans-serif";
+    -fx-background-radius: 3,2,2,2;
+    -fx-padding: 12 30 12 30;
+    -fx-border-color: #c30010;
+    -fx-border-width: 1px;
+    -fx-alignment: center;
+    -fx-content-display: center;
+}
+
+.button-subscribed:hover {
+    -fx-background-color: #e60000;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0.3, 0, 2);
+}
+
+.btn-back {
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Sans-serif";
+    -fx-background-radius: 3,2,2,2;
+    -fx-padding: 10 20 10 20;
+    -fx-border-color: #FFBF00;
+    -fx-border-width: 1px;
+    -fx-alignment: center;
+    -fx-content-display: center;
+}
+
+.btn-back:hover {
+    -fx-background-color: rgba(255, 191, 0, 0.1);
+    -fx-text-fill: white;
+    -fx-border-color: #FFBF00;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0.3, 0, 2);
+}
+
+.btn-secondary {
+    -fx-background-color: #f0f0f0;
+    -fx-text-fill: black;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Sans-serif";
+    -fx-background-radius: 3,2,2,2;
+    -fx-padding: 10 20 10 20;
+    -fx-border-color: #FFBF00;
+    -fx-border-width: 1px;
+    -fx-alignment: center;
+    -fx-content-display: center;
+}
+
+.btn-secondary:hover {
+    -fx-background-color: rgba(255, 191, 0, 0.1);
+    -fx-text-fill: white;
+    -fx-border-color: #FFBF00;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 5, 0.3, 0, 2);
+}
+#login_website_link {
+    -fx-text-fill: #FFBF00;
+}
+
+#login_website_link:hover {
+    -fx-text-fill: white;
 }

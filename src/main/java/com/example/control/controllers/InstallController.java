@@ -1,32 +1,28 @@
 package com.example.control.controllers;
 
-import com.example.control.utils.windows.Apps;
-import javafx.application.Platform;
-import javafx.concurrent.Task;
+import com.example.control.utils.windows.APPS;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextArea;
-import java.io.*;
+import javafx.scene.layout.StackPane;
+
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class InstallController {
 
-    private final Utils utilController;
-
-    public InstallController(Utils utilController) {
-        this.utilController = utilController;
-    }
-
+    @FXML private StackPane loadingOverlay;
+    private Utils utilController;
 
     @FXML
-    public void install(Set<String> selectedApps) {
-        List<Apps> apps = selectedApps.stream().map(Apps::valueOf).toList();
+    public void initialize() {
+        utilController = new Utils(loadingOverlay);
+    }
+
+    @FXML
+    public void fetch(Set<String> selectedApps) {
+        List<APPS> apps = selectedApps.stream().map(APPS::valueOf).toList();
 
         for (int i = 0; i < apps.size(); i++) {
-            utilController.runCommand(apps.get(i).getInstallCommand(), apps.get(i).isRequiresAdmin());
+            utilController.runCommand(apps.get(i).getInstallCommand(), true, apps.get(i).isRequiresAdmin());
         }
     }
 }

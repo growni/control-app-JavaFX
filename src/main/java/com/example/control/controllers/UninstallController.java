@@ -1,40 +1,49 @@
 package com.example.control.controllers;
 
-import com.example.control.utils.windows.Apps;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
+import com.example.control.utils.windows.APPS;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextArea;
+import javafx.scene.layout.StackPane;
 
-import java.io.File;
 import java.util.List;
 import java.util.Set;
 
 public class UninstallController {
 
-    private final Utils utilController;
+    @FXML StackPane loadingOverlay;
 
-    public UninstallController(Utils utilController) {
-        this.utilController = utilController;
+    private Utils utilController;
+
+    @FXML
+    public void initialize() {
+        utilController = new Utils(loadingOverlay);
     }
-
     public void uninstall(Set<String> selectedApps) {
         utilController.log("Uninstall clicked!");
 
-        List<Apps> apps = selectedApps.stream().map(Apps::valueOf).toList();
+        List<APPS> apps = selectedApps.stream().map(APPS::valueOf).toList();
+
+        utilController.stopPendingInstallations();
 
         for(int i = 0; i < apps.size(); i++) {
+            APPS app = apps.get(i);
+           // Set<Path> paths = app.getPaths();
+            utilController.runCommand(apps.get(i).getKillCommand(), true, apps.get(i).isRequiresAdmin());
 
-            utilController.stopPendingInstallations();
+//            if(!paths.isEmpty()) {
+//                for (Path path : paths) {
+//                    try {
+//                        apps.get(i).delete(path);
+//                    } catch (IOException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
+//            }
 
-            File fileDirectory = new File(apps.get(i).getPath());
 
-            utilController.runCommand(apps.get(i).getKillCommand(), apps.get(i).isRequiresAdmin());
-            apps.get(i).delete(fileDirectory);
-            utilController.runCommand(apps.get(i).getUninstallCommand(), apps.get(i).isRequiresAdmin());
-
+            utilController.runCommand(app.getUninstallCommand(), false, app.isRequiresAdmin());
         }
     }
+
+
 
 }
