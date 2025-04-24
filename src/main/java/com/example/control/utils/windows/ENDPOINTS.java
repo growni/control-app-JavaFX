@@ -20,6 +20,7 @@ public enum ENDPOINTS {
 //    REGISTER("http://localhost:8000/api/auth/register"),
 //    UPDATE_PASSWORD("http://localhost:8000/api/profile/update-password");
 
+
     private final String url;
 
     ENDPOINTS(String url) {
