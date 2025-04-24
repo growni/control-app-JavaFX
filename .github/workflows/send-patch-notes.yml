@@ -15,8 +15,14 @@ jobs:
           ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
           NOTES: ${{ github.event.release.body }}
         run: |
-          echo "Sending patch notes to backend..."
+          echo "DEBUG: Notes content below"
+          echo "$NOTES"
+          
+          echo "DEBUG: Creating JSON payload"
           jq -nc --arg notes "$NOTES" '{notes: $notes}' > payload.json
+          cat payload.json
+
+          echo "DEBUG: Sending POST request"
           curl -X POST "$BACKEND_URL" \
             -H "Content-Type: application/json" \
             -H "X-API-KEY: $ADMIN_API_KEY" \
