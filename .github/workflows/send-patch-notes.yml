@@ -2,7 +2,7 @@ name: Send Patch Notes to Subscribers
 
 on:
   release:
-    types: [published]
+    types: [published, edited]
 
 jobs:
   send-email:
