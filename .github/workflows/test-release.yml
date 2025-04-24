@@ -1,0 +1,13 @@
+# .github/workflows/test-release.yml
+name: Test Release Trigger
+
+on:
+  release:
+    types: [published, edited]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Release Notes
+        run: echo "${{ github.event.release.body }}"
