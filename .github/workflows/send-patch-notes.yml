@@ -10,10 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Send Patch Notes to Backend
-        run: |
-          curl -X POST "$BACKEND_URL" \
-            -H "Content-Type: application/json" \
-            -H "X-API-KEY: ${{ secrets.ADMIN_API_KEY }}" \
-            -d "{\"notes\": \"test notes\"}"
         env:
           BACKEND_URL: https://control-app-backend-aqm1.onrender.com/api/admin/send-patch-notes
+          ADMIN_API_KEY: ${{ secrets.ADMIN_API_KEY }}
+          NOTES: ${{ github.event.release.body }}
+        run: |
+          echo "Sending patch notes to backend..."
+          jq -nc --arg notes "$NOTES" '{notes: $notes}' > payload.json
+          curl -X POST "$BACKEND_URL" \
+            -H "Content-Type: application/json" \
+            -H "X-API-KEY: $ADMIN_API_KEY" \
+            -d @payload.json
