@@ -6,15 +6,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DebloatController {
 
@@ -22,10 +19,9 @@ public class DebloatController {
 
     @FXML private ListView<String> lv_found_apps;
     @FXML private ListView<String> lv_apps_to_remove;
-    @FXML private Button button_scan;
-    @FXML private Button button_start_debloat;
     @FXML private TextArea logArea;
     @FXML private Button button_log;
+    @FXML private SplitPane pane_kill_services_mask_button;
 
     private final ObservableList<String> foundApps = FXCollections.observableArrayList();
     private final ObservableList<String> appsToRemove = FXCollections.observableArrayList();
@@ -53,7 +49,7 @@ public class DebloatController {
 
         try {
             ProcessBuilder builder = new ProcessBuilder("powershell", "-Command",
-                    "Get-AppxPackage | Select-Object -ExpandProperty Name");
+                    "Get-AppxPackage | Where-Object { $_.Name -match 'Xbox|Skype|OneNote|Zune|Feedback|3D|People|GetHelp|MixedReality' } | Select-Object -ExpandProperty Name");
             builder.redirectErrorStream(true);
             Process process = builder.start();
 

@@ -3,7 +3,9 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -25,7 +27,7 @@
         <Button fx:id="button_back_to_main" mnemonicParsing="false" onAction="#goToMain" styleClass="btn-back" text="back" />
         <ListView fx:id="lv_apps_to_remove" layoutX="274.0" layoutY="100.0" opacity="0.9" prefHeight="300.0" prefWidth="232.0" />
         <ListView fx:id="lv_found_apps" layoutX="14.0" layoutY="100.0" opacity="0.9" prefHeight="300.0" prefWidth="232.0" />
-        <Button fx:id="button_kill_background_services" layoutX="14.0" layoutY="490.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" styleClass="btn-main" text="Kill services" />
+        <Button fx:id="button_kill_background_services" disable="true" layoutX="14.0" layoutY="490.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="139.0" styleClass="btn-main" text="Kill services" />
         <TextArea fx:id="logArea" editable="false" layoutX="544.0" layoutY="100.0" opacity="0.9" prefHeight="518.0" prefWidth="471.0">
             <font>
                 <Font name="SansSerif Regular" size="14.0" />
@@ -39,6 +41,11 @@
                 <Font name="SansSerif Bold" size="12.0" />
             </font>
         </Button>
+      <SplitPane id="pane_kill_services_mask_button" layoutX="14.0" layoutY="490.0" opacity="0.0" prefHeight="25.0" prefWidth="139.0" styleClass="btn-main">
+          <tooltip>
+              <Tooltip text="This feature is still in development." />
+          </tooltip>
+      </SplitPane>
 
     </children>
 </AnchorPane>

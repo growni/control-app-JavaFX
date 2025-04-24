@@ -1,13 +1,11 @@
 package com.example.control.controllers;
 
 import com.example.control.DTO.RegisterRequest;
-import com.example.control.DTO.Session;
 import com.example.control.utils.windows.ENDPOINTS;
 import com.example.control.utils.windows.PATHS;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

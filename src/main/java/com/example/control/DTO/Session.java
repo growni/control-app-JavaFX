@@ -3,6 +3,7 @@ package com.example.control.DTO;
 public class Session {
     private static String username;
     private static String email;
+    private static boolean subscribed = false;
     private static boolean isGuest = true;
 
     public static void setUsername(String user) {
@@ -15,6 +16,14 @@ public class Session {
 
     public static String getEmail() {
         return email;
+    }
+
+    public static void setSubscribed(boolean isSubscribed) {
+        Session.subscribed = isSubscribed;
+    }
+
+    public static boolean getSubscribed() {
+        return Session.subscribed;
     }
 
     public static boolean isGuest() {

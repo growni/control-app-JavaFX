@@ -4,8 +4,6 @@ import com.example.control.DTO.FeedbackRequest;
 import com.example.control.DTO.Session;
 import com.example.control.utils.windows.ENDPOINTS;
 import com.example.control.utils.windows.PATHS;
-import com.example.control.utils.windows.URLs;
-import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -13,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
-import javafx.util.Duration;
 import org.springframework.http.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -156,7 +153,7 @@ public class ProfileController {
 
         HttpEntity<Map<String, String>> entity = new HttpEntity<>(body, headers);
 
-        boolean isSubscribed = isEmailSubscribed(email);
+        boolean isSubscribed = Session.getSubscribed();
 
         String url = isSubscribed
                 ? ENDPOINTS.UNSUBSCRIBE.getValue()
@@ -167,6 +164,7 @@ public class ProfileController {
 
             if (response.getStatusCode() == HttpStatus.OK) {
                 Platform.runLater(() -> applySubscriptionStyle(email));
+                Session.setSubscribed(!isSubscribed);
             } else {
                 utilController.runLaterAlert(Alert.AlertType.ERROR, "Failed", response.toString());
                 throw new RuntimeException();
@@ -229,29 +227,11 @@ public class ProfileController {
     }
 
 
-    private boolean isEmailSubscribed(String email) {
 
-        RestTemplate restTemplate = new RestTemplate();
-        String url = ENDPOINTS.IS_SUBSCRIBED.getValue() + email;
-
-        try {
-            ResponseEntity<Boolean> response = restTemplate.getForEntity(url, Boolean.class);
-
-            if (response.getBody() != null && response.getBody()) {
-                return true;
-            } else {
-                return false;
-            }
-
-        } catch (Exception e) {
-            System.out.println("Error checking subscription status: " + e.getMessage());
-            return false;
-        }
-    }
 
     private void applySubscriptionStyle(String email) {
 
-        if(isEmailSubscribed(email)) {
+        if(Session.getSubscribed()) {
             profile_subscribe_button.setText("Unsubscribe 🔥");
             profile_subscribe_button.getStyleClass().setAll("button-subscribed");
         } else {

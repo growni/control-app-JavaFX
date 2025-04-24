@@ -8,20 +8,14 @@ import com.example.control.utils.windows.PATHS;
 import com.example.control.utils.windows.URLs;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gluonhq.attach.util.Util;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 import org.springframework.http.*;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.HttpClientErrorException;
@@ -122,6 +116,7 @@ public class LoginController {
 
                 Session.setUsername(username);
                 Session.setEmail(email);
+                Session.setSubscribed(isEmailSubscribed(email));
                 Session.setGuest(false);
 
             } else {
@@ -134,6 +129,26 @@ public class LoginController {
         } catch (Exception e) {
             utilController.runLaterAlert(Alert.AlertType.ERROR, "Error", "Unexpected error: " + e.getMessage());
             throw new RuntimeException();
+        }
+    }
+
+    private boolean isEmailSubscribed(String email) {
+
+        RestTemplate restTemplate = new RestTemplate();
+        String url = ENDPOINTS.IS_SUBSCRIBED.getValue() + email;
+
+        try {
+            ResponseEntity<Boolean> response = restTemplate.getForEntity(url, Boolean.class);
+
+            if (response.getBody() != null && response.getBody()) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error checking subscription status: " + e.getMessage());
+            return false;
         }
     }
 

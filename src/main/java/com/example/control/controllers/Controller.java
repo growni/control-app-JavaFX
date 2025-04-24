@@ -69,20 +69,7 @@ public class Controller {
 
         for(int i = 0; i < apps.size(); i++) {
             APPS app = apps.get(i);
-            // Set<Path> paths = app.getPaths();
             utilController.runCommand(apps.get(i).getKillCommand(), true, apps.get(i).isRequiresAdmin());
-
-//            if(!paths.isEmpty()) {
-//                for (Path path : paths) {
-//                    try {
-//                        apps.get(i).delete(path);
-//                    } catch (IOException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
-//            }
-
-
             utilController.runCommand(app.getUninstallCommand(), false, app.isRequiresAdmin());
         }
     }
