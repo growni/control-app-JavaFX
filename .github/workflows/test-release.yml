@@ -4,6 +4,7 @@ name: Test Release Trigger
 on:
   release:
     types: [published, edited]
+    workflow_dispatch:
 
 jobs:
   test:
