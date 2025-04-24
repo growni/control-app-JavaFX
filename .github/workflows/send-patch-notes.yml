@@ -1,0 +1,18 @@
+name: Send Patch Notes to Subscribers
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  send-email:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Patch Notes to Backend
+        run: |
+          curl -X POST "$BACKEND_URL" \
+            -H "Content-Type: application/json" \
+            -H "X-API-KEY: ${{ secrets.ADMIN_API_KEY }}" \
+            -d "{\"notes\": \"${{ github.event.release.body }}\"}"
+        env:
+          BACKEND_URL: https://control-app-backend-aqm1.onrender.com/api/admin/send-patch-notes
