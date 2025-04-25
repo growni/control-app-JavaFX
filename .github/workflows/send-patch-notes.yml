@@ -2,29 +2,23 @@ name: Send Patch Notes to Subscribers
 
 on:
   release:
-    types: [published, edited]
+    types: [published]
 
 jobs:
   send-email:
     runs-on: ubuntu-latest
-    if: startsWith(github.event.release.tag_name, 'v')
     steps:
       - name: Debug Release Event
         run: |
-          echo "Release Event Tag: ${{ github.event.release.tag_name }}"
-          echo "Release Body: ${{ github.event.release.body }}"
 
       - name: Send Patch Notes to Backend
         run: |
           PATCH_NOTES="${{ github.event.release.body }}"
-          if [ -z "$PATCH_NOTES" ]; then
-            echo "Patch notes are empty, skipping email."
-          else
-            PATCH_NOTES=$(echo "$PATCH_NOTES" | jq -Rs .)
-            curl -X POST "$BACKEND_URL" \
-              -H "Content-Type: application/json" \
-              -H "X-API-KEY: ${{ secrets.ADMIN_API_KEY }}" \
-              -d "{\"notes\": $PATCH_NOTES}"
-          fi
+          PATCH_NOTES=$(echo "$PATCH_NOTES" | jq -Rs .)
+          curl -X POST "$BACKEND_URL" \
+            -H "Content-Type: application/json" \
+            -H "X-API-KEY: ${{ secrets.ADMIN_API_KEY }}" \
+            -d "{\"notes\": $PATCH_NOTES}"
+
         env:
           BACKEND_URL: https://control-app-backend-aqm1.onrender.com/api/admin/send-patch-notes
