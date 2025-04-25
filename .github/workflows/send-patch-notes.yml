@@ -10,10 +10,16 @@ jobs:
     steps:
       - name: Prepare and Send Patch Notes
         run: |
+          # Replace newline characters with <br> for HTML email formatting
           PATCH_NOTES=$(echo "${{ github.event.release.body }}" | sed 's/\n/<br>/g')
-          
+
+          # URL-encode the PATCH_NOTES and ensure it is a valid JSON string
           PATCH_NOTES_ENCODED=$(echo "$PATCH_NOTES" | jq -Rs .)
 
+          # Debug the PATCH_NOTES_ENCODED
+          echo "Encoded PATCH_NOTES: $PATCH_NOTES_ENCODED"
+
+          # Send the patch notes to the backend API
           curl -X POST "$BACKEND_URL" \
             -H "Content-Type: application/json" \
             -H "X-API-KEY: ${{ secrets.ADMIN_API_KEY }}" \
