@@ -8,19 +8,12 @@ jobs:
   send-email:
     runs-on: ubuntu-latest
     steps:
-      - name: Check if jq is available
+      - name: Prepare and Send Patch Notes
         run: |
-          which jq || echo "jq is NOT available"
-          jq --version || echo "jq is missing"
-
-      - name: Send Patch Notes to Backend
-        run: |
-          PATCH_NOTES="${{ github.event.release.body }}"
-          PATCH_NOTES=$(echo "$PATCH_NOTES" | jq -Rs .)
+          PATCH_NOTES=$(jq -Rs . <<< "${{ github.event.release.body }}")
           curl -X POST "$BACKEND_URL" \
             -H "Content-Type: application/json" \
             -H "X-API-KEY: ${{ secrets.ADMIN_API_KEY }}" \
             -d "{\"notes\": $PATCH_NOTES}"
-
         env:
           BACKEND_URL: https://control-app-backend-aqm1.onrender.com/api/admin/send-patch-notes
