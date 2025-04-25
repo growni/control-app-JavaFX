@@ -10,19 +10,11 @@ jobs:
     steps:
       - name: Prepare and Send Patch Notes
         run: |
-          # Replace newline characters with <br> for HTML email formatting
-          PATCH_NOTES=$(echo "${{ github.event.release.body }}" | sed 's/\n/<br>/g')
-
-          # URL-encode the PATCH_NOTES and ensure it is a valid JSON string
-          PATCH_NOTES_ENCODED=$(echo "$PATCH_NOTES" | jq -Rs .)
-
-          # Debug the PATCH_NOTES_ENCODED
-          echo "Encoded PATCH_NOTES: $PATCH_NOTES_ENCODED"
-
-          # Send the patch notes to the backend API
+          PATCH_NOTES=$(echo "${{ github.event.release.body }}" | jq -Rs .)
+          
           curl -X POST "$BACKEND_URL" \
             -H "Content-Type: application/json" \
             -H "X-API-KEY: ${{ secrets.ADMIN_API_KEY }}" \
-            -d "{\"notes\": $PATCH_NOTES_ENCODED}"
+            -d "{\"notes\": $PATCH_NOTES$'\n'/'%0A'}"
         env:
           BACKEND_URL: https://control-app-backend-aqm1.onrender.com/api/admin/send-patch-notes
