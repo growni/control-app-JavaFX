@@ -8,6 +8,8 @@ jobs:
   send-email:
     runs-on: ubuntu-latest
     steps:
+      - name: Debug Release Event
+        run: |
 
       - name: Send Patch Notes to Backend
         run: |
