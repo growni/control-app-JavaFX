@@ -11,7 +11,7 @@ jobs:
       - name: Debug Release Event
         run: |
           echo "Release Event Payload:"
-          echo "${{ toJson(github.event.payload.discription) }}"
+          echo "${{ toJson(github.event.release) }}"
         
       - name: Send Patch Notes to Backend
         run: |
