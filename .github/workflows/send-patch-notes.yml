@@ -2,18 +2,24 @@ name: Send Patch Notes to Subscribers
 
 on:
   release:
-    types: [published, edited]
-  workflow_dispatch:
+    types: [published]
 
 jobs:
   send-email:
     runs-on: ubuntu-latest
     steps:
+      - name: Debug Release Event
+        run: |
+
       - name: Send Patch Notes to Backend
         run: |
+          PATCH_NOTES="${{ github.event.release.body }}"
+
+          PATCH_NOTES=$(echo "$PATCH_NOTES" | jq -Rs .)
           curl -X POST "$BACKEND_URL" \
             -H "Content-Type: application/json" \
             -H "X-API-KEY: ${{ secrets.ADMIN_API_KEY }}" \
-            -d "{\"notes\": \"${{ github.event.release.body }}\"}"
+            -d "{\"notes\": $PATCH_NOTES}"
+
         env:
           BACKEND_URL: https://control-app-backend-aqm1.onrender.com/api/admin/send-patch-notes
