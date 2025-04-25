@@ -8,8 +8,10 @@ jobs:
   send-email:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug Release Event
+      - name: Check if jq is available
         run: |
+          which jq || echo "jq is NOT available"
+          jq --version || echo "jq is missing"
 
       - name: Send Patch Notes to Backend
         run: |
