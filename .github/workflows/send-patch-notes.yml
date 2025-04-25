@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Prepare and Send Patch Notes
         run: |
-          PATCH_NOTES=$(echo "${{ github.event.release.body }}" | sed 's/\n/<br>/g')
+          PATCH_NOTES=$(echo "${{ github.event.release.body }}" | sed 's/\n/<br>/g' | jq -Rs .)
           
           curl -X POST "$BACKEND_URL" \
             -H "Content-Type: application/json" \
