@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static com.example.control.utils.windows.PATHS.ICON_MAIN;
+
 public class Main extends Application {
 
     public static void main(String[] args) {
@@ -30,7 +32,7 @@ public class Main extends Application {
         stage.setTitle("Control");
         stage.setScene(scene);
 
-        Image icon = new Image("file:/M:/study/Control/src/main/resources/com/example/control/images/app_icon.png");
+        Image icon = new Image(ICON_MAIN.getValue());
         stage.getIcons().add(icon);
 
         stage.setResizable(false);

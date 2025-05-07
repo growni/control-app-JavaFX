@@ -104,7 +104,7 @@
             <Font name="SansSerif Bold" size="14.0" />
          </font>
       </CheckBox>
-      <CheckBox fx:id="checkboxPostman" layoutX="175.0" layoutY="270.0" mnemonicParsing="false" text="Postman" textFill="#ff9d00">
+      <CheckBox fx:id="checkboxPostman" layoutX="176.0" layoutY="270.0" mnemonicParsing="false" text="Postman" textFill="#ff9d00">
          <font>
             <Font name="SansSerif Bold" size="14.0" />
          </font>
@@ -127,7 +127,7 @@
             <Font name="SansSerif Bold" size="14.0" />
          </font>
       </CheckBox>
-      <CheckBox fx:id="checkboxMySqlWorkbench" layoutX="319.0" layoutY="245.0" mnemonicParsing="false" text="MySQL Workbench" textFill="#ff9d00">
+      <CheckBox fx:id="checkboxMySqlWorkbench" layoutX="319.0" layoutY="235.0" mnemonicParsing="false" text="MySQL Workbench" textFill="#ff9d00">
          <font>
             <Font name="SansSerif Bold" size="14.0" />
          </font>

@@ -7,7 +7,8 @@ public enum PATHS {
     RESET_PASSWORD("/com/example/control/scenes/reset-password.fxml"),
     DEBLOAT("/com/example/control/scenes/debloat.fxml"),
     PROFILE("/com/example/control/scenes/profile.fxml"),
-    STYLE_ALL("/com/example/control/style.css");
+    STYLE_ALL("/com/example/control/style.css"),
+    ICON_MAIN("file:/M:/study/Control/src/main/resources/com/example/control/images/app_icon.png");
 
     private final String path;
 
