@@ -2,6 +2,8 @@
 
 A desktop app for power users who want to **install**, **uninstall**, **clean**, and **optimize** their Windows environment — with a connected backend and a responsive frontend.
 
+### 📦 Download the latest release from the releases tab or visit my website https://control-app-free.netlify.app/
+
 ---
 
 ## ✨ Features
